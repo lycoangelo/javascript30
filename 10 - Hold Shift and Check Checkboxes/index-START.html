@@ -96,6 +96,49 @@
   </div>
 
 <script>
+  const items = document.querySelectorAll('.item input[type=checkbox]');  
+  let lastChecked;
+  let isShiftPressed = false;
+  let inBetween = false;
+
+  function handleCheck() {
+    let between = false;
+    if (!this.checked && isShiftPressed) {
+      console.log('unchecked', isShiftPressed);
+    } else if ((lastChecked !== undefined) && this.checked && isShiftPressed) {
+      items.forEach(item => {
+        if (item === this || item === lastChecked) {
+          inBetween = !inBetween;
+          console.log('this', this, 'lastChecked', lastChecked);
+        }
+
+        if (inBetween) {
+          item.checked = true;
+        }
+      });
+      console.log('checked ', isShiftPressed);
+      console.log('lastchecked =', lastChecked);
+    } else if (this.checked && !isShiftPressed) {
+      console.log('shift is not pressed');
+    }
+
+    lastChecked = this;
+  };
+
+  items.forEach(item => {
+    item.addEventListener('click', handleCheck);
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.keyCode == 16) {
+      isShiftPressed = true;
+    } 
+  });
+  window.addEventListener('keyup', (e) => {
+    if (e.keyCode == 16) {
+      isShiftPressed = false;
+    }
+  });
 </script>
 </body>
 </html>
