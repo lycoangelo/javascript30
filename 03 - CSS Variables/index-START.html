@@ -9,10 +9,10 @@
 
   <div class="controls">
     <label for="spacing">Spacing:</label>
-    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="0" data-sizing="px">
 
     <label for="blur">Blur:</label>
-    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    <input id="blur" type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
 
     <label for="base">Base Color</label>
     <input id="base" type="color" name="base" value="#ffc600">
@@ -21,6 +21,20 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+
+    :root {
+      --spacing: 10px;
+      --base: #ffc600;
+      --blur: 0px;
+    }
+
+    /* Added CSS */
+    
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -45,6 +59,45 @@
   </style>
 
   <script>
+
+
+
+    // Before watching the video tutorial //
+    // const spacing = document.querySelector('#spacing');
+    // const base = document.querySelector('#base');
+    // const blur = document.querySelector('#blur');
+
+    // const img = document.querySelector('img');
+
+    // spacing.addEventListener('change', function() {
+    //   img.style.padding = spacing.value + 'px';
+    //   console.log(spacing.value);
+    // });
+
+    // base.addEventListener('change', function() {
+    //   img.style.background = base.value;
+    //   console.log(base.value);
+    // });
+
+    // blur.addEventListener('change', function() {
+    //   img.style.filter = 'blur(' + blur.value + 'px)';
+    //   console.log(blur.value);
+    // });
+
+
+
+    // After watching video tut
+    const input = document.querySelectorAll('.controls input');
+
+    function updateValue() {
+      const suffix = this.dataset.sizing || '';
+      const img = document.querySelector('img');
+
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
+
+    input.forEach(input => input.addEventListener('change', updateValue));
+    input.forEach(input => input.addEventListener('mousemove', updateValue));
   </script>
 
 </body>
