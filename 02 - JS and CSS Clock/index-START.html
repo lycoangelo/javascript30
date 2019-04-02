@@ -74,13 +74,11 @@
     const min_hand = document.querySelector('.min-hand');
     const sec_hand = document.querySelector('.second-hand');
 
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    const sec = date.getSeconds();
-
-
     function currentTime() {
       const date = new Date;
+      const hour = date.getHours();
+      const min = date.getMinutes();
+      const sec = date.getSeconds();
 
       const hourRotation = ((hour * 360) /60) + 90;
       hr_hand.style.transform = `rotate(${hourRotation}deg)`;
