@@ -126,8 +126,7 @@
 
     function clear(e) {
       e.preventDefault();
-      localStorage.removeItem('items', JSON.stringify(itemsArray));
-      itemList.innerHTML = '';
+      localStorage.clear();
       itemsArray.splice(0, itemsArray.length);
       addToList(itemsArray, itemList);
     }
