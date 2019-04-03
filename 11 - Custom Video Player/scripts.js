@@ -46,6 +46,6 @@ rangeBtns.forEach(rangeButton => rangeButton.addEventListener('mousemove', updat
 
 let mousedown = false;
 progress.addEventListener('click', scrub);
-progress.addEventListener('mousedown', (b) => mousedown && scrub(b));
+progress.addEventListener('mousemove', (b) => mousedown && scrub(b));
 progress.addEventListener('mousedown', () => mousedown = true);
 progress.addEventListener('mouseup', () => mousedown = false);
