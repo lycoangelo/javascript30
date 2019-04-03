@@ -48,7 +48,7 @@
   <script>
     const itemList = document.querySelector('.plates');
     const form = document.querySelector('.add-items');
-    const itemsArray = JSON.parse(localStorage.getItem('items')) || [];
+    let itemsArray = JSON.parse(localStorage.getItem('items')) || [];
     const clearBtn = document.querySelector(`input[name='clear']`);
     const deleteBtn = document.querySelector(`input[name='delete']`);
     const checkAllBtn = document.querySelector(`input[name='checkAll']`);
@@ -109,19 +109,28 @@
 
     function deleteChecked(e) {
       e.preventDefault();
+
+      let doneItems = [];
+
       itemsArray.map((item, index) => {
-        if (item.done === true) {
-          itemsArray.splice(index, 1);
-          localStorage.setItem('items', JSON.stringify(itemsArray));
+        if (!item.done === true) {
+          doneItems.push(item);
+          localStorage.removeItem('items');
+          localStorage.setItem('items', JSON.stringify(doneItems));
+          itemList.innerHTML = '';
+          itemsArray = [...doneItems];
           addToList(itemsArray, itemList);
         }
       })
+
     }
 
     function clear(e) {
       e.preventDefault();
       localStorage.removeItem('items', JSON.stringify(itemsArray));
       itemList.innerHTML = '';
+      itemsArray.splice(0, itemsArray.length);
+      addToList(itemsArray, itemList);
     }
 
     form.addEventListener('submit', addItems);
