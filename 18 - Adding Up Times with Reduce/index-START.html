@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -181,7 +183,26 @@
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+    const times = [...document.querySelectorAll('li[data-time]')];
+    const timeList = times.map(time => time.dataset.time.split(':'));
+
+    const seconds = timeList
+      .reduce((total, time) => {
+        return parseInt(total) + parseInt(time[1]);
+      }, 0);
+
+    const minutes = timeList
+      .reduce((total, time) => {
+        return parseInt(total) + parseInt(time[0]);
+      }, 0);
+
+    const totalHours = Math.floor(((minutes * 60) + seconds) / 3600);
+    const totalMinutes = Math.floor(((minutes * 60) + seconds) / 60) % 60;
+    const totalSeconds = Math.floor(seconds % 60);
+
+    console.log(totalHours, totalMinutes, totalSeconds);
+  </script>
 </body>
+
 </html>
