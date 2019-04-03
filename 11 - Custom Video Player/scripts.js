@@ -9,7 +9,7 @@ progressBar.style.flexBasis = 0;
 
 function handleVideo() {
   const videoMethod = video.paused ? 'play' : 'pause';
-  
+
   video[videoMethod]();
 }
 
@@ -27,13 +27,12 @@ function updateRange() {
 
 function handleProgress() {
   const progress = (video.currentTime / video.duration) * 100;
-  progressBar.style.flexBasis = `${progress}%`;
+  progressBar.style.flexBasis = `${ progress }%`;
 }
 
 function scrub(e) {
   const time = (e.offsetX / progress.offsetWidth) * video.duration;
   video.currentTime = time;
-  console.log(time);
 }
 
 videoToggle.addEventListener('click', handleVideo);
@@ -46,7 +45,7 @@ rangeBtns.forEach(rangeButton => rangeButton.addEventListener('change', updateRa
 rangeBtns.forEach(rangeButton => rangeButton.addEventListener('mousemove', updateRange));
 
 let mousedown = false;
-progress.addEventListener('click', scrub); 
+progress.addEventListener('click', scrub);
 progress.addEventListener('mousedown', (b) => mousedown && scrub(b));
 progress.addEventListener('mousedown', () => mousedown = true);
-progress.addEventListener('mousedown', () => mousedown = false);
+progress.addEventListener('mouseup', () => mousedown = false);
