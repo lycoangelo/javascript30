@@ -113,16 +113,15 @@
       let doneItems = [];
 
       itemsArray.map((item, index) => {
-        if (!item.done === true) {
+        if (item.done === false) {
           doneItems.push(item);
           localStorage.removeItem('items');
-          localStorage.setItem('items', JSON.stringify(doneItems));
-          itemList.innerHTML = '';
-          itemsArray = [...doneItems];
-          addToList(itemsArray, itemList);
         }
       })
-
+      itemList.innerHTML = '';
+      itemsArray = [...doneItems];
+      localStorage.setItem('items', JSON.stringify(doneItems));
+      addToList(itemsArray, itemList);
     }
 
     function clear(e) {
