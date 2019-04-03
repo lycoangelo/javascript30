@@ -278,31 +278,35 @@
 
   <script>
     const items = [...document.querySelectorAll('.item input[type=checkbox]')];
-    let lastChecked;
-    let isShiftPressed = false;
-    let inBetween = false;
+    let lastIndex = null;
+    let selectedIndex = null;
+    let range = null;
 
-    function handleCheck(e) {
-      let between = false;
-      if (!this.checked && e.shiftKey) {
-      } else if ((lastChecked !== undefined) && this.checked && e.shiftKey) {
-        items.forEach(item => {
-          if (item === this || item === lastChecked) {
-            inBetween = !inBetween;
-          }
+    function handleCheckboxClick(e) {
+      const { shiftKey, target } = e;
 
-          if (inBetween) {
-            item.checked = true;
-          }
-        });
+      selectedIndex = items.indexOf(target);
+
+      if (shiftKey && items[selectedIndex].checked) {
+        let start = null;
+        let end = null;
+
+        if (lastIndex !== null) {
+          start = selectedIndex < lastIndex ? selectedIndex : lastIndex;
+          end = (selectedIndex > lastIndex ? selectedIndex : lastIndex) + 1;
+        } else {
+          start = selectedIndex;
+          end = items.length + 1;
+        }
+
+        range = items.slice(start.end);
+        range.forEach(item => item.checked = true);
       }
 
-      lastChecked = this;
-    };
+      lastIndex = selectedIndex;
+    }
 
-    items.forEach(item => {
-      item.addEventListener('click', handleCheck);
-    });
+    items.forEach(item => item.addEventListener('click', handleCheckboxClick));
   </script>
 </body>
 
