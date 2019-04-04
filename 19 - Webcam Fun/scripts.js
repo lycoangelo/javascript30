@@ -12,7 +12,6 @@ if (navigator.getUserMedia) {
       video: true
     },
     function (play) {
-      var video = document.querySelector('video');
       video.srcObject = play;
       video.onloadedmetadata = function (e) {
         video.play();
