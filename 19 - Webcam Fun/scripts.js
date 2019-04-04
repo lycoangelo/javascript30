@@ -4,23 +4,13 @@ const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+constraints = { video: true };
 
-if (navigator.getUserMedia) {
-  navigator.getUserMedia(
-    {
-      video: true
-    },
-    function (play) {
-      video.srcObject = play;
-      video.onloadedmetadata = function (e) {
-        video.play();
-      };
-    },
-    function (err) {
-      console.log("Error: " + err.name);
-    }
-  );
-} else {
-  console.log("Not supported.");
-};
+navigator.mediaDevices.getUserMedia(constraints)
+  .then(function (stream) {
+    video.srcObject = stream;
+    video.play();
+  })
+  .catch(function (err) {
+    console.log('Error:', err);
+  });
