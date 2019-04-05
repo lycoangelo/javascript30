@@ -32,7 +32,7 @@ function takePhoto() {
   const imgSRC = img.src;
   link.setAttribute('href', imgSRC);
   link.setAttribute('download', '');
-  document.body.append(link);
+  strip.prepend(link);
   link.append(img);
 }
 
