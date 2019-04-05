@@ -7,18 +7,19 @@ const snap = document.querySelector('.snap')
 navigator.mediaDevices.getUserMedia({ video: true })
   .then(function (stream) {
     video.srcObject = stream;
-    video.play();
+    const videoPlay = video.play();
     video.onloadedmetadata = function (e) {
-      drawCanvas();
+      drawCanvas(videoPlay);
     }
   })
   .catch(function (err) {
     console.log('Error:', err);
   });
 
-function drawCanvas() {
-  ctx.globalCompositionOperation = "lighten";
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+function drawCanvas(videoPlay) {
+  setInterval(() => {
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  }, 16);
 }
 
 function takePhoto() {
@@ -34,3 +35,5 @@ function takePhoto() {
   document.body.append(link);
   link.append(img);
 }
+
+video.addEventListener('playing', drawCanvas);
